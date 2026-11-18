@@ -1,0 +1,41 @@
+# Core research stack.
+#
+# Pinning policy - please read before "fixing" this file:
+#
+#   vectorbt is pinned exactly. It is the engine; a surprise major version
+#   would change results, not just APIs.
+#
+#   Everything else is range-pinned to a compatible band rather than to an
+#   exact version. ccxt in particular ships releases most days as exchanges
+#   change their APIs, and freezing it means the data layer breaks the first
+#   time an exchange changes an endpoint.
+#
+#   For reproducibility, setup.ps1 writes the exact resolved set to
+#   requirements.lock.txt after installing. THAT is the file to commit
+#   alongside a result you want to reproduce later. Recreate an environment
+#   from it with:  pip install -r requirements.lock.txt
+#
+# Requires Python >=3.11,<3.15 (vectorbt 1.1.0's own constraint).
+
+vectorbt==1.1.0
+
+ccxt>=4.5,<5.0
+
+# pandas 3.x is REQUIRED, not optional: vectorbt 1.1.0 declares
+# pandas>=3.0.3,<4.0. Do not cap this below 3.0 or pip will refuse to resolve.
+# pandas 3.0 was released January 2026 and supports Python 3.11+.
+pandas>=3.0.3,<4.0
+
+numpy>=1.26,<3.0
+pyarrow>=16.0
+matplotlib>=3.8
+
+# plotly is pulled in by vectorbt, which registers its own chart template at
+# import time. That template references the `scattermapbox` trace, which plotly
+# removed in 7.0 (Mapbox traces were deprecated from 5.24 in favour of the
+# MapLibre-based `scattermap`, and dropped in 7.0). With plotly 7 installed,
+# `import vectorbt` raises ValueError before any of our code runs.
+#
+# vectorbt 1.1.0 does not cap plotly itself, so we cap it here. 6.8.x still
+# ships the mapbox traces. Remove this pin once vectorbt updates its template.
+plotly>=6.0,<7.0

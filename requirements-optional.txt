@@ -1,0 +1,14 @@
+# Optional extras. Not needed for the core backtesting workflow.
+#
+# Install with:  pip install -r requirements-optional.txt
+
+# Polymarket public market data (official SDK; NOT the archived py-clob-client).
+# Used only via PublicClient, which needs no credentials.
+polymarket-client==0.7.1
+
+# Jupyter, if you would rather work in notebooks than scripts.
+jupyterlab>=4.0
+
+# Test runner. The tests also run standalone without it:
+#   python tests\test_risk.py
+pytest>=8.0

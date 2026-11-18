@@ -1,0 +1,15 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+data/cache/
+reports/
+state/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Nothing in this project needs credentials, but if you ever add a live layer,
+# this line is the first thing you should not delete.
+.env
+*.key
+secrets*.json
